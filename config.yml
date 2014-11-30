@@ -1,3 +1,19 @@
+database:
+  stats:
+    host: localhost
+    port: 3306
+    user: root
+    pass: p@ssw0rd
+    name: stats
+  data:
+    host: localhost
+    port: 3306
+    user: root
+    pass: p@ssow0rd
+    name: data
 towns:
+  - "Some town settings here"
 users:
+  - "some user configz here"
 taxes:
+  - "Tax and fee settings"
