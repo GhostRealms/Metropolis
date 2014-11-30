@@ -7,6 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="ProtocolLib" level="project" />
+    <orderEntry type="library" name="spigot-api-1.8-R0.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="commons-pool2-2.0" level="project" />
+    <orderEntry type="library" name="jedis-2.4.2" level="project" />
   </component>
 </module>
-
