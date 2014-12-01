@@ -1,19 +1,17 @@
 database:
-  stats:
-    host: localhost
-    port: 3306
-    user: root
-    pass: p@ssw0rd
-    name: stats
-  data:
-    host: localhost
-    port: 3306
-    user: root
-    pass: p@ssow0rd
-    name: data
-towns:
-  - "Some town settings here"
-users:
-  - "some user configz here"
+  host: localhost
+  port: 3306
+  user: root
+  pass: p@ssow0rd
+  name: data
+  tables:
+    plot: "plots"
+    town: "towns"
+    state: "states"
+    resident: "residents"
+    user: "users"
+    stats: "stats"
 taxes:
-  - "Tax and fee settings"
+  town_creation: 5000
+  state_creation: 25000
+  plot_town_claim: 100
