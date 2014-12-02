@@ -20,7 +20,7 @@ public class Metro extends JavaPlugin {
 
     enum Tables {Resident,Town,State,Plot,Users,Stats}
 
-    private Map<Tables, String> tableNames = new HashMap<Tables, String>();
+    private static Map<Tables, String> tableNames = new HashMap<Tables, String>();
 
     @Override
     public void onLoad() {
@@ -52,6 +52,10 @@ public class Metro extends JavaPlugin {
 
     }
 
+    public static String getTableName(Tables table) {
+        return tableNames.get(table);
+    }
+
     private void runstartup() throws SQLException {
         String url = "jdbc:mysql://" + getConfig().getString("database.host") + ":" +
                 getConfig().getInt("database.port") + "/" + getConfig().getString("database.name");
@@ -64,29 +68,33 @@ public class Metro extends JavaPlugin {
         Statement statement = connection.createStatement();
 
         statement.execute("CREATE TABLE IF NOT EXISTS plots (" +
-                "id INTEGER NOT NULL AUTO_INCREMENT" +
-                "x INTEGER NOT NULL," +
-                "y INTEGER NOT NULL," +
+                "id int(3) NOT NULL AUTO_INCREMENT," +
+                "x INT NOT NULL," +
+                "y INT NOT NULL," +
                 "world varchar(30) NOT NULL," +
                 "owner varchar(255)," +
                 "use varchar(255)," +
                 "edit varchar(255)," +
                 "access varchar(255)," +
                 "banned varchar(255)," +
+                "flags varchar(255)," +
                 "PRIMARY KEY (id) " +
                 ");");
         statement.execute("CREATE TABLE IF NOT EXISTS residents (" +
                 "uuid varchar(35) NOT NULL," +
-                "town integer," +
+                "town INT," +
                 "town_role varchar(20)," +
+                "join_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
                 "PRIMARY KEY (uuid)" +
                 ");");
+
         statement.execute("CREATE TABLE IF NOT EXISTS towns (" +
                 "id INTEGER NOT NULL AUTO_INCREMENT," +
                 "name varchar(10) NOT NULL," +
                 "bank float NOT NULL," +
-                "spawnCoord varchar(50) NOT NULL," +
+                "spawnCoord varchar(50) NOT NULL," + //Stored in x,y,z,YAW,PITCH format. uses the world of the registrar
                 "mayor varchar(255) NOT NULL," +
+                "create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
                 "primary key (id)"+
                 "); ");
     }
