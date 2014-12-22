@@ -1,6 +1,8 @@
 package net.ghostrealms.metropolis;
 
+import net.ghostrealms.metropolis.eco.Taxes;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,6 +19,7 @@ import java.util.Map;
 public class Metro extends JavaPlugin {
 
     private static Connection connection = null;
+    private BukkitScheduler scheduler;
 
     enum Tables {Resident,Town,State,Plot,Users,Stats}
 
@@ -41,6 +44,8 @@ public class Metro extends JavaPlugin {
         tableNames.put(Tables.State, getConfig().getString("database.tables.state"));
         tableNames.put(Tables.Users, getConfig().getString("database.tables.user"));
         tableNames.put(Tables.Stats, getConfig().getString("database.tables.stats"));
+        scheduler = getServer().getScheduler();
+        scheduler.scheduleSyncRepeatingTask(this, new Taxes(this), 0L, 1728000L); //Run the tax task every 24 hours
     }
 
     @Override
