@@ -1,4 +1,4 @@
-package net.ghostrealms.metropolis;
+package net.ghostrealms;
 
 import net.ghostrealms.metropolis.eco.Taxes;
 import org.bukkit.plugin.java.JavaPlugin;
