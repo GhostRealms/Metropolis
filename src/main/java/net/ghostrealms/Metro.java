@@ -4,6 +4,7 @@ import net.ghostrealms.metropolis.eco.Taxes;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,8 +21,10 @@ public class Metro extends JavaPlugin {
 
     private static Connection connection = null;
     private BukkitScheduler scheduler;
+    private File dataFolder;
+    private File townFolder;
 
-    enum Tables {Resident,Town,State,Plot,Users,Stats}
+    public enum Tables {Resident,Town,State,Plot,Users,Stats}
 
     private static Map<Tables, String> tableNames = new HashMap<Tables, String>();
 
@@ -33,6 +36,9 @@ public class Metro extends JavaPlugin {
             e.printStackTrace();
             getServer().getPluginManager().disablePlugin(this);
         }
+
+        dataFolder = this.getDataFolder();
+
     }
 
     @Override

@@ -1,6 +1,6 @@
 package net.ghostrealms.metropolis.eco;
 
-import net.ghostrealms.metropolis.Metro;
+import net.ghostrealms.Metro;
 
 /**
  * Created by River on 21-Dec-14.

@@ -1,6 +1,6 @@
 package net.ghostrealms.protection;
 
-import net.ghostrealms.metropolis.Metro;
+import net.ghostrealms.Metro;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;

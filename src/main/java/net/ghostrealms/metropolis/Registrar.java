@@ -1,6 +1,6 @@
 package net.ghostrealms.metropolis;
 
-import net.ghostrealms.exception.InvalidPlotException;
+import net.ghostrealms.Metro;
 import net.ghostrealms.protection.Plot;
 import org.bukkit.Chunk;
 import org.bukkit.Location;

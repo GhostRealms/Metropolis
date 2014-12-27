@@ -9,6 +9,7 @@ import java.util.UUID;
  * Created by River on 29-Nov-14 18:41.
  * Town Object Class
  */
+
 public class Town {
 
     private int id;
@@ -20,15 +21,4 @@ public class Town {
     public Town() {
 
     }
-
-    public Location getSpawnLocation() {
-        return spawnLocation;
-    }
-
-    public void setSpawnLocation(Location loc) throws InvalidPlotException {
-
-    }
-
-
-
 }
