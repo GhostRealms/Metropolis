@@ -1,4 +1,4 @@
-## Metropolis | v 1.0.38
+## Metropolis | v 1.0.39
 
 Metropolis is the Custom Towny/Kingdoms fork for use on the Ghost Realms metro server. This plugin implements the plot,
 town, state, and resident functions, as well as some economy functions. It has a built in protection system and a built

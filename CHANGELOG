@@ -1,3 +1,7 @@
+1.0.39 - Fanciful
+- Implement the Fanciful message builder for the new 1.7 text features.
+- add fanciful repo and dependency to maven
+
 1.0.38 - Minor Update
 - Add the ChangeLog
 - Formatting fixes in the Metro Class
