@@ -24,6 +24,8 @@ public class Metro extends JavaPlugin {
     private File dataFolder;
     private File townFolder;
 
+    private static LangLib language;
+
     public enum Tables {Resident,Town,State,Plot,Users,Stats}
 
     private static Map<Tables, String> tableNames = new HashMap<Tables, String>();
@@ -52,6 +54,8 @@ public class Metro extends JavaPlugin {
         tableNames.put(Tables.Stats, getConfig().getString("database.tables.stats"));
         scheduler = getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(this, new Taxes(this), 0L, 1728000L); //Run the tax task every 24 hours
+
+        language = new LangLib(this);
     }
 
     @Override
@@ -112,5 +116,9 @@ public class Metro extends JavaPlugin {
 
     public static Connection getConnection() {
         return connection;
+    }
+
+    public static LangLib getLanguage() {
+        return language;
     }
 }
