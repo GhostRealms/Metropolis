@@ -1,3 +1,6 @@
 name: Metropolis
 author: Ghost-Realms
-version: 0.0.1
+version: 0.0.1-prerelease
+commands:
+  tc:
+    description: Town Chat

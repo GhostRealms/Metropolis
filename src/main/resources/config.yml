@@ -1,3 +1,4 @@
+announce-new-resident: true
 database:
   host: localhost
   port: 3306
