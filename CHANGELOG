@@ -1,0 +1,5 @@
+1.0.38 - Minor Update
+- Add the ChangeLog
+- Formatting fixes in the Metro Class
+- Restart the registrar class
+- Add Vault to Maven and setup the Objects onEnable
