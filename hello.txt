@@ -1,0 +1,6 @@
+Since it's a bit clear the governments etc are a bit separate from the actual Metropolis plugin, King and I have kept a separate repo for it, on my own account. It's public, so you can take a look whenever; although it only really has pseudo-code in it right now, so we can grasp the concept better. 
+This way, he and I can effectively help you with the core features of Metropolis. To clarify: Actual development on the governments and wars branch of Metropolis is delayed, but in the meantime he and I will be discussing its implementation. During said delay, he and I will be able to assist with the core functionality of this plugin.
+Keep in mind, however, King doesn't have as much experience with Bukkit as we do, which is why, at the moment, it's good to have him help with pseudo-code so we know how to tackle these problems.
+I look forward to continued work on this plugin and others.
+Regards,
+  lemonpup
