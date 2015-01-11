@@ -18,6 +18,7 @@ import java.util.concurrent.Callable;
 public class UUIDLib {
 
     private UUIDLib() {}
+
     public static UUID getID(String user) {
         UUIDFetcher fetcher = new UUIDFetcher(Arrays.asList(user));
         try {
