@@ -123,7 +123,7 @@ public final class Items {
         public ItemStackBuilder addLore(String... lore) {
             ItemMeta itemMeta = itemStack.getItemMeta();
             List<String> original = itemMeta.getLore();
-            if (original == null) original = new ArrayList<>();
+            if (original == null) original = new ArrayList<String>();
             Collections.addAll(original, Strings.format(lore));
             itemMeta.setLore(original);
             itemStack.setItemMeta(itemMeta);
@@ -132,7 +132,7 @@ public final class Items {
         public ItemStackBuilder addLore(List<String> lore) {
             ItemMeta itemMeta = itemStack.getItemMeta();
             List<String> original = itemMeta.getLore();
-            if (original == null) original = new ArrayList<>();
+            if (original == null) original = new ArrayList<String>();
             original.addAll(Strings.format(lore));
             itemMeta.setLore(original);
             itemStack.setItemMeta(itemMeta);
