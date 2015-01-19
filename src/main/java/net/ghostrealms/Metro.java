@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class Metro extends JavaPlugin {
 
-    private Economy econ = null;
+    private static Economy econ = null;
     private Connection connection = null;
 
     @Override
@@ -57,4 +57,14 @@ public class Metro extends JavaPlugin {
         econ = rsp.getProvider();
         return econ != null;
     }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public static Economy getEconomy() {
+        return econ;
+    }
+
+
 }
