@@ -31,6 +31,10 @@
             <id>fanciful-mvn-repo</id>
             <url>http://repo.franga2000.com/artifactory/public</url>
         </repository>
+        <repository>
+            <id>flags-repo</id>
+            <url>http://pages.suddenlink.net/alshain01/flags/repository</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -65,6 +69,18 @@
             <groupId>mkremins</groupId>
             <artifactId>fanciful</artifactId>
             <version>0.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.alshain01.flags</groupId>
+            <artifactId>Flags</artifactId>
+            <version>RELEASE</version>
+            <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>
