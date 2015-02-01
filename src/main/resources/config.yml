@@ -16,3 +16,5 @@ taxes:
   town_creation: 5000
   state_creation: 25000
   plot_town_claim: 100
+world:
+  name: 'world'
