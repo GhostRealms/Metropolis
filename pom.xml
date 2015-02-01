@@ -24,7 +24,6 @@
                     <configuration>
                         <source>1.7</source>
                         <target>1.7</target>
-                        <compilerArgument></compilerArgument>
                     </configuration>
                 </plugin>
             </plugins>
