@@ -1,9 +1,12 @@
 package net.ghostrealms.resident;
 
-import net.ghostrealms.FriendException;
-import net.ghostrealms.TownException;
+import net.ghostrealms.exception.FriendException;
+import net.ghostrealms.Metro;
+import net.ghostrealms.exception.InsufficientFundsException;
+import net.ghostrealms.exception.TownException;
 import net.ghostrealms.plot.Plot;
 import net.ghostrealms.town.Town;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,10 @@ public class Resident {
     private int townId;
     private List<UUID> friends = new ArrayList<UUID>();
     private List<Plot> ownedPlots = new ArrayList<Plot>();
+    
+    public Resident(UUID id) {
+        // pew pew todo
+    }
 
     public void joinTown(int id) throws TownException {
         Town t = Town.getByID(id);
@@ -31,6 +38,10 @@ public class Resident {
         } else {
             throw new TownException("Town not joinable");
         }
+    }
+
+    public UUID getUUID() {
+        return id;
     }
 
     public void leaveTown() {
@@ -51,6 +62,36 @@ public class Resident {
           throw new FriendException("User is not a friend");
         }
         friends.remove(id);
+    }
+    
+    public List<Resident> getFriends() {
+        List<Resident> list = new ArrayList<Resident>();
+        for(UUID id : friends) {
+            list.add(new Resident(id));
+        }
+        return list;
+    }
+
+    public double getBalance() {
+        return Metro.getEconomy().getBalance(Bukkit.getOfflinePlayer(id));
+    }
+
+    public void withdraw(double amount) {
+        Metro.getEconomy().withdrawPlayer(Bukkit.getOfflinePlayer(id), amount);
+    }
+
+    public void deposit(double amount) {
+        Metro.getEconomy().depositPlayer(Bukkit.getOfflinePlayer(id), amount);
+    }
+
+    public void pay(Resident res, double amount) throws InsufficientFundsException {
+        double balance = Metro.getEconomy().getBalance(Bukkit.getOfflinePlayer(id));
+        if(balance > amount) {
+            Metro.getEconomy().withdrawPlayer(Bukkit.getOfflinePlayer(id), amount);
+            Metro.getEconomy().depositPlayer(Bukkit.getOfflinePlayer(res.getUUID()), amount);
+        } else {
+            throw new InsufficientFundsException();
+        }
     }
 
 }
