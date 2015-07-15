@@ -12,31 +12,31 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Database {
-  
+
   enum SQL {
     H2,
     MYSQL,
     SQLITE;
   }
-  
+
   private final JavaPlugin plugin;
   private final String db;
   private SQL mode = SQL.H2;
-  
+
   private Connection connection;
-  
+
   private String mysql_user;
   private String mysql_pass;
   private String mysql_host;
   private String mysql_database;
   private int    mysql_port;
-  
+
   private ArrayList<String> updateQueue = new ArrayList<String>();
-  
+
   public Database(String db, JavaPlugin plugin) {
     this.db = db;
     this.plugin = plugin;
-    
+
     if(mode == SQL.MYSQL) {
       FileConfiguration config = plugin.getConfig();
       mysql_database = config.getString("database.name");
@@ -45,12 +45,12 @@ public class Database {
       mysql_pass     = config.getString("database.pass");
       mysql_port     = config.getInt("database.port");
     }
-    
+
     setupConnection();
   }
-  
+
   private void setupConnection() {
-    
+
     switch(mode) {
       default:
       case H2:
@@ -78,9 +78,9 @@ public class Database {
           connection = null;
           break;
         }
-        
+
         try {
-          connection = DriverManager.getConnection("jdbc:mysql://" + mysql_host + ":" + mysql_port + 
+          connection = DriverManager.getConnection("jdbc:mysql://" + mysql_host + ":" + mysql_port +
                                                    "/" + mysql_database,  mysql_user, mysql_pass);
         } catch (SQLException ex) {
           ex.printStackTrace();
@@ -96,7 +96,7 @@ public class Database {
           connection = null;
           break;
         }
-        
+
         try {
           connection = DriverManager.getConnection("jdbc:sqlite:" + plugin.getDataFolder() +
                                                    File.separator + db);
@@ -109,15 +109,15 @@ public class Database {
     }
 
   }
-  
+
   protected String getDatabase() {
     return db;
   }
-  
+
   private String getDatabaseURL() {
     return "jdbc:h2:" + plugin.getDataFolder() + File.separator + db;
   }
-  
+
   public void close() {
     try {
       if(!connection.isClosed()) {
@@ -129,20 +129,20 @@ public class Database {
   }
 
   /**
-   * This will add an Update SQL statement to the queue to be updated upon calling #runQueue* 
+   * This will add an Update SQL statement to the queue to be updated upon calling #runQueue*
    * @param statement
    */
   public void queue(String statement) {
     updateQueue.add(statement);
   }
-  
+
   public void runQueue() {
     for(String sql : updateQueue) {
       update(sql);
       updateQueue.remove(sql);
     }
   }
-  
+
   public boolean execute(String sql) {
     try {
       Statement stmt = connection.createStatement();
@@ -154,7 +154,7 @@ public class Database {
       return false;
     }
   }
-  
+
   public int executeUpdate(String sql) {
     try {
       Statement stmt = connection.createStatement();
@@ -166,7 +166,7 @@ public class Database {
       return -1;
     }
   }
-  
+
   public ResultSet executeQuery(String sql) {
     try {
       Statement stmt = connection.createStatement();
@@ -178,19 +178,19 @@ public class Database {
       return null;
     }
   }
-  
+
   public ResultSet query(String sql) {
     return executeQuery(sql);
   }
-  
+
   public int update(String sql) {
     return executeUpdate(sql);
   }
-  
+
   protected void setMode(SQL mode) {
     this.mode = mode;
   }
-  
+
   protected SQL getMode() {
     return mode;
   }
