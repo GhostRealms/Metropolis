@@ -1,4 +1,4 @@
-package net.ghostrealms;
+package net.ghostrealms.util;
 /**
  * Created by River on 29-Nov-14 00:31.
  * UUID to Username converter and Vice Versa
