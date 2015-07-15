@@ -1,2 +1,0 @@
-prefix: "&7[Metro] "
-town-chat-format: "&3[Town] &a{town-title} &2{display-name}&f: {message}"
