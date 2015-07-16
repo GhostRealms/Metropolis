@@ -1,18 +1,29 @@
 package net.ghostrealms;
 
+import net.sf.ehcache.CacheManager;
 
-import net.milkbowl.vault.economy.Economy;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
 public class Metro extends JavaPlugin {
-
+    
+    private static CacheManager cacheManager = new CacheManager();
     private static RealmsEconomy econ = null;
+    private static Register register = null;
+    private static JavaPlugin plugin = null;
+    
+    private Database db = null;
+    
+    @Override
+    public void onLoad() {
+        plugin = this;
+    }
 
     @Override
     public void onEnable() {
         econ = new RealmsEconomy(this);
+        db = new Database("metro", this);
+        register = new Register(this, db);
     }
 
     @Override
@@ -22,6 +33,18 @@ public class Metro extends JavaPlugin {
     
     public static RealmsEconomy getEconomy() {
         return econ;
+    }
+    
+    public static Register getRegister() {
+        return register;
+    }
+    
+    public static CacheManager getCacheManager() {
+        return cacheManager;
+    }
+    
+    public static JavaPlugin plugin() {
+        return plugin;
     }
 
 
