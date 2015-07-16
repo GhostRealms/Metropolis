@@ -1,10 +1,15 @@
 package net.ghostrealms;
 
 import net.ghostrealms.plot.Plot;
+import net.ghostrealms.resident.Resident;
+import net.ghostrealms.town.Town;
 import net.sf.ehcache.Cache;
 
+import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.UUID;
 
 public class Register {
 
@@ -32,6 +37,30 @@ public class Register {
   
   public void cachePlot(Plot plot) {
     //TODO add a plot to the cache
+  }
+  
+  public Plot getPlot(int x, int z) {
+    return null;
+  }
+  
+  public Plot getPlot(Chunk c) {
+    return null;
+  }
+  
+  public Town getTown(String name) {
+    return null;
+  }
+  
+  public Town getTown(int tID) {
+    return null;
+  }
+  
+  public Resident getResident(Player p) {
+    return null;
+  }
+  
+  public Resident getResident(UUID id) {
+    return null;
   }
   
 }
