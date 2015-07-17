@@ -3,7 +3,6 @@ package net.ghostrealms;
 import net.ghostrealms.plot.Plot;
 import net.ghostrealms.resident.Resident;
 import net.ghostrealms.town.Town;
-import net.sf.ehcache.Cache;
 
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
@@ -22,10 +21,6 @@ public class Register {
 
   private static Register me;
 
-  private static Cache plotCache = new Cache("plot", 200, false, false, 24 * 60 * 60, 24 * 60 * 60);
-  private static Cache resCache = new Cache("resident", 200, false, false, 24 * 60 * 60, 24 * 60 * 60);
-  private static Cache townCache = new Cache("town", 200, false, false, 24 * 60 * 60, 24 * 60 * 60);
-  
   
   private final JavaPlugin plugin;
   private final Database database;
@@ -38,7 +33,6 @@ public class Register {
   public Register(JavaPlugin plugin, Database database) {
     this.plugin = plugin;
     this.database = database;
-    Metro.getCacheManager().addCache(plotCache);
     me = this;
   }
   

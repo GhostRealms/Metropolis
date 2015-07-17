@@ -2,14 +2,11 @@ package net.ghostrealms;
 
 import com.thoughtworks.xstream.XStream;
 
-import net.sf.ehcache.CacheManager;
-
 import org.bukkit.plugin.java.JavaPlugin;
 
 
 public class Metro extends JavaPlugin {
-    
-    private static CacheManager cacheManager = new CacheManager();
+  
     private static XStream xstream = new XStream();
     private static RealmsEconomy econ = null;
     private static Register register = null;
@@ -69,10 +66,6 @@ public class Metro extends JavaPlugin {
     
     public static Register getRegister() {
         return register;
-    }
-    
-    public static CacheManager getCacheManager() {
-        return cacheManager;
     }
     
     public static JavaPlugin plugin() {
