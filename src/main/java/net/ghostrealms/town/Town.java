@@ -1,6 +1,5 @@
 package net.ghostrealms.town;
 
-import net.ghostrealms.Metro;
 import net.ghostrealms.resident.Resident;
 
 import java.util.ArrayList;
@@ -74,12 +73,20 @@ public class Town {
   }
 
   /**
-   * *
+   * Add a Resident to the Town; This does not require any form of confirmation and should only
+   * be used in a programmatic manner* 
    * @param resident
    */
   public void addResident(Resident resident) {
-
-  }
   
+  }
+
+  /**
+   * Add a Resident as a staff member of a town * 
+   * @param resident
+   */
+  public void addStaff(Resident resident) {
+    this.getTownStaff().add(resident);
+  }
 
 }

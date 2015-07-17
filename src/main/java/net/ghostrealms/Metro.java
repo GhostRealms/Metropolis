@@ -1,5 +1,7 @@
 package net.ghostrealms;
 
+import com.thoughtworks.xstream.XStream;
+
 import net.sf.ehcache.CacheManager;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -8,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Metro extends JavaPlugin {
     
     private static CacheManager cacheManager = new CacheManager();
+    private static XStream xstream = new XStream();
     private static RealmsEconomy econ = null;
     private static Register register = null;
     private static JavaPlugin plugin = null;
@@ -46,6 +49,10 @@ public class Metro extends JavaPlugin {
                    + "data TEXT NOT NULL," 
                    + "time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()"
                    + ");");
+        db.execute("CREATE TABLE IF NOT EXISTS town_map (" 
+                   + "id INT(3) NOT NULL PRIMARY KEY," 
+                   + "name VARCHAR(20) NOT NULL"
+                   + ");");
         
         econ = new RealmsEconomy(this);
         register = new Register(this, db);
@@ -72,5 +79,8 @@ public class Metro extends JavaPlugin {
         return plugin;
     }
 
+    public static XStream xstream() {
+      return xstream;
+    }
 
 }
