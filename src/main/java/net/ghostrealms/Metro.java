@@ -30,18 +30,6 @@ public class Metro extends JavaPlugin {
                    + "joined TIMESTAMP NOT NULL," 
                    + "town INT(3)," 
                    + "friends TEXT);");
-        db.execute("CREATE TABLE IF NOT EXISTS towns (" 
-                   + "id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY," 
-                   + "name VARCHAR(16) NOT NULL," 
-                   + "mayor VARCHAR(36) NOT NULL," 
-                   + "staff TEXT,"
-                   + "flags TEXT," 
-                   + "board VARCHAR(120) NOT NULL DEFAULT 'A new town! Set your board with /t set board',"
-                   + "plotTax FLOAT NOT NULL DEFAULT '0'," 
-                   + "residentTax FLOAT NOT NULL DEFAULT '0'," 
-                   + "joinable BOOL NOT NULL DEFAULT 0," 
-                   + "balance FLOAT NOT NULL DEFAULT '100.0'"
-                   + ");");
         db.execute("CREATE TABLE IF NOT EXISTS plots ("
                    + "id INT(16) NOT NULL AUTO_INCREMENT PRIMARY KEY," 
                    + "x INT(4) NOT NULL," 
@@ -52,6 +40,12 @@ public class Metro extends JavaPlugin {
                    + "users TEXT," 
                    + "flags TEXT"
                    + ");");
+        db.execute("CREATE TABLE IF NOT EXISTS requests (" 
+                   + "id VARCHAR(36) NOT NULL PRIMARY KEY," 
+                   + "type INT(2) NOT NULL," 
+                   + "data TEXT NOT NULL," 
+                   + "time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()"
+                   + ");");
         
         econ = new RealmsEconomy(this);
         register = new Register(this, db);
@@ -59,7 +53,7 @@ public class Metro extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        
+      db.close();
     }
     
     public static RealmsEconomy getEconomy() {
