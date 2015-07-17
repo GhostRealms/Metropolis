@@ -40,14 +40,6 @@
             <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
         </repository>
         <repository>
-            <id>fanciful-mvn-repo</id>
-            <url>http://repo.franga2000.com/artifactory/public</url>
-        </repository>
-        <repository>
-            <id>flags-repo</id>
-            <url>http://pages.suddenlink.net/alshain01/flags/repository</url>
-        </repository>
-        <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
@@ -80,11 +72,6 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.184</version>
-        </dependency>
-        <dependency>
-            <groupId>mkremins</groupId>
-            <artifactId>fanciful</artifactId>
-            <version>0.3.1</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
