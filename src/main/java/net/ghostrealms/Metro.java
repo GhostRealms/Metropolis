@@ -4,6 +4,8 @@ import com.thoughtworks.xstream.XStream;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 
 public class Metro extends JavaPlugin {
   
@@ -22,15 +24,14 @@ public class Metro extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        
-        db.execute("CREATE TABLE IF NOT EXISTS residents (" 
+      db.execute("CREATE TABLE IF NOT EXISTS residents (" 
                    + "id VARCHAR(36) NOT NULL PRIMARY KEY," 
                    + "name VARCHAR(16) NOT NULL," 
                    + "last_seen TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()," 
                    + "joined TIMESTAMP NOT NULL," 
                    + "town INT(3)," 
                    + "friends TEXT);");
-        db.execute("CREATE TABLE IF NOT EXISTS plots ("
+      db.execute("CREATE TABLE IF NOT EXISTS plots ("
                    + "id INT(16) NOT NULL AUTO_INCREMENT PRIMARY KEY," 
                    + "x INT(4) NOT NULL," 
                    + "y INT(4) NOT NULL," 
@@ -40,24 +41,27 @@ public class Metro extends JavaPlugin {
                    + "users TEXT," 
                    + "flags TEXT"
                    + ");");
-        db.execute("CREATE TABLE IF NOT EXISTS requests (" 
+      db.execute("CREATE TABLE IF NOT EXISTS requests (" 
                    + "id VARCHAR(36) NOT NULL PRIMARY KEY," 
                    + "type INT(2) NOT NULL," 
                    + "data TEXT NOT NULL," 
                    + "time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()"
                    + ");");
-        db.execute("CREATE TABLE IF NOT EXISTS town_map (" 
+      db.execute("CREATE TABLE IF NOT EXISTS town_map (" 
                    + "id INT(3) NOT NULL PRIMARY KEY," 
                    + "name VARCHAR(20) NOT NULL"
                    + ");");
         
-        econ = new RealmsEconomy(this);
-        register = new Register(this, db);
+      econ = new RealmsEconomy(this);
+      register = new Register(this, db);
+      
+      register.loadTowns();
     }
 
     @Override
     public void onDisable() {
       db.close();
+      register.saveTowns();
     }
     
     public static RealmsEconomy getEconomy() {

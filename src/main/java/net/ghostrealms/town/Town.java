@@ -41,6 +41,10 @@ public class Town {
   @Getter
   @Setter
   private String board = "A New Town! Set your board with /t set board.";
+  
+  @Getter
+  @Setter
+  private Government govType = Government.DEMOCRACY;
 
   /**
    * Initialize a Town Object* 
@@ -78,7 +82,7 @@ public class Town {
    * @param resident
    */
   public void addResident(Resident resident) {
-  
+    //TODO force add the resident into the town
   }
 
   /**
