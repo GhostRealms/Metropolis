@@ -1,5 +1,6 @@
 package net.ghostrealms;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,6 +12,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 public class Database {
 
   enum SQL {
@@ -21,15 +26,26 @@ public class Database {
 
   private final JavaPlugin plugin;
   private final String db;
+  
+  @Getter
+  @Setter(AccessLevel.PROTECTED)
   private SQL mode = SQL.H2;
 
+  @Getter(AccessLevel.PRIVATE)
+  @Setter(AccessLevel.PRIVATE)
   private Connection connection;
 
-  private String mysql_user;
-  private String mysql_pass;
-  private String mysql_host;
-  private String mysql_database;
+  @Getter(AccessLevel.PROTECTED)
+  @Setter(AccessLevel.PROTECTED)
+  private String mysql_user, mysql_pass, mysql_host, mysql_database;
+  
+  @Getter(AccessLevel.PROTECTED)
+  @Setter(AccessLevel.PROTECTED)
   private int    mysql_port;
+  
+  @Getter
+  @Setter(AccessLevel.PRIVATE)
+  private String url;
 
   private ArrayList<String> updateQueue = new ArrayList<String>();
 
@@ -58,15 +74,16 @@ public class Database {
           Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException ex) {
           ex.printStackTrace();
-          connection = null;
+          this.setConnection(null);
           break;
         }
 
-        String url = "jdbc:h2:" + plugin.getDataFolder() + File.separator + db;
+        this.setUrl("jdbc:h2:" + plugin.getDataFolder() + File.separator + db);
 
         try {
-          connection = DriverManager.getConnection(url);
+          this.setConnection(DriverManager.getConnection(url));
         } catch (SQLException ex) {
+          this.setConnection(null);
           ex.printStackTrace();
         }
         break;
@@ -75,16 +92,16 @@ public class Database {
           Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
           ex.printStackTrace();
-          connection = null;
+          this.setConnection(null);
           break;
         }
 
         try {
-          connection = DriverManager.getConnection("jdbc:mysql://" + mysql_host + ":" + mysql_port +
-                                                   "/" + mysql_database,  mysql_user, mysql_pass);
+          this.setUrl("jdbc:mysql://" + mysql_host + ":" + mysql_port + "/" + mysql_database);
+          this.setConnection(DriverManager.getConnection(getUrl(), mysql_user, mysql_pass));
         } catch (SQLException ex) {
           ex.printStackTrace();
-          connection = null;
+          this.setConnection(null);
           break;
         }
         break;
@@ -93,50 +110,43 @@ public class Database {
           Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException ex) {
           ex.printStackTrace();
-          connection = null;
+          this.setConnection(null);
           break;
         }
 
         try {
-          connection = DriverManager.getConnection("jdbc:sqlite:" + plugin.getDataFolder() +
-                                                   File.separator + db);
+          this.setConnection(DriverManager.getConnection("jdbc:sqlite:" + plugin.getDataFolder() +
+                                                         File.separator + db));
         } catch (SQLException ex) {
           ex.printStackTrace();
-          connection = null;
+          this.setConnection(null);
           break;
         }
         break;
     }
 
   }
-
-  protected String getDatabase() {
-    return db;
-  }
-
-  private String getDatabaseURL() {
-    return "jdbc:h2:" + plugin.getDataFolder() + File.separator + db;
-  }
-
-  public void close() {
+  
+  protected void flush() {
+    forceRunQueue();
     try {
-      if(!connection.isClosed()) {
-        connection.close();
-      }
+      connection.close();
     } catch (SQLException ex) {
-      ex.printStackTrace();
+     ex.printStackTrace(); 
+    } finally {
+      this.setConnection(null);
     }
   }
 
   /**
-   * This will add an Update SQL statement to the queue to be updated upon calling #runQueue*
+   * This will add an Update SQL statement to the queue to be updated upon calling #forceRunQueue*
    * @param statement
    */
   public void queue(String statement) {
     updateQueue.add(statement);
   }
 
-  public void runQueue() {
+  public void forceRunQueue() {
     for(String sql : updateQueue) {
       update(sql);
       updateQueue.remove(sql);
@@ -146,13 +156,14 @@ public class Database {
   public boolean execute(String sql) {
     try {
       Statement stmt = connection.createStatement();
-      boolean status = stmt.execute(sql);
+      boolean result = stmt.execute(sql);
       stmt.closeOnCompletion();
-      return status;
+      return result;
     } catch (SQLException ex) {
       ex.printStackTrace();
       return false;
     }
+
   }
 
   public int executeUpdate(String sql) {
@@ -185,14 +196,6 @@ public class Database {
 
   public int update(String sql) {
     return executeUpdate(sql);
-  }
-
-  protected void setMode(SQL mode) {
-    this.mode = mode;
-  }
-
-  protected SQL getMode() {
-    return mode;
   }
 
 }
