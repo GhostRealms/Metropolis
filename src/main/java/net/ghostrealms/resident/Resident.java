@@ -38,8 +38,8 @@ public class Resident {
   }
   
   public void requestTown(Town t) {
-
   }
-  
+
+  public UUID getUUID(){ return id; }
 
 }

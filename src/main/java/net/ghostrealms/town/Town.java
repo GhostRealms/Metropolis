@@ -26,6 +26,10 @@ public class Town {
   @Getter
   @Setter(AccessLevel.PRIVATE)
   private List<UUID> banned = new ArrayList<UUID>();
+
+  @Getter
+  @Setter
+  private List<Resident> residents = new ArrayList<Resident>();
   
   @Setter
   private boolean joinable = true;
@@ -51,7 +55,6 @@ public class Town {
    * @param name
    */
   public Town(String name) {
-
     tID = -1;
   }
 
@@ -69,11 +72,7 @@ public class Town {
    * @return true if staff
    */
   public boolean isStaff(Resident res) {
-    if (townStaff.contains(res)) {
-      return true;
-    } else {
-      return false;
-    }
+    return townStaff.contains(res);
   }
 
   /**
@@ -82,15 +81,35 @@ public class Town {
    * @param resident
    */
   public void addResident(Resident resident) {
-    //TODO force add the resident into the town
+     this.residents.add(resident);
   }
 
   /**
-   * Add a Resident as a staff member of a town * 
+   * Add a Resident as a staff member of a town*
    * @param resident
    */
   public void addStaff(Resident resident) {
-    this.getTownStaff().add(resident);
+    this.townStaff.add(resident);
   }
+
+  /**
+   * Return tru if the resident is on the banned member list*
+   * @param res
+   * @return true if banned
+   */
+   public boolean isBanned(Resident res){return banned.contains(res.getUUID());}
+
+    /**
+     * Bans player from town if not staff*
+     * @param res
+     * @return true if player is staff
+     */
+    public boolean addBanned(Resident res){
+        if(!isBanned(res) && !isStaff(res)){
+            banned.add(res.getUUID());
+            return false;
+        }
+        return false;
+    }
 
 }
