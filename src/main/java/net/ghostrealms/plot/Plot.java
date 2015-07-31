@@ -41,17 +41,17 @@ public class Plot {
     x = chunk.getX();
     z = chunk.getZ();
   }
-  
+  public void addPermitted(UUID newPermitted){ this.permitted.add(newPermitted); }
+
   public void setOwner(UUID newOwner) {
     this.owner = newOwner;
   }
-  
+
+
   private void serialize() {
-    
   }
   
   private void deserialize() {
-
   }
   
 }
