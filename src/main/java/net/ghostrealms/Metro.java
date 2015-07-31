@@ -12,12 +12,16 @@ public class Metro extends JavaPlugin {
   
     @Getter
     private static XStream xstream = new XStream();
+    
     @Getter 
     private static RealmsEconomy econ = null;
+    
     @Getter
     private static Register register = null;
+    
     @Getter
     private static JavaPlugin plugin = null;
+    
     @Getter(AccessLevel.PACKAGE)
     private static Database db = null;
     
@@ -60,7 +64,14 @@ public class Metro extends JavaPlugin {
       econ = new RealmsEconomy(this);
       register = new Register(this, db);
       
-      register.loadTowns();
+      //Experimental: Possible performance increase loading xml in another thread?
+      new Runnable() {
+        @Override
+        public void run() {
+          register.loadTowns();
+        }
+      }.run();
+      
     }
 
     @Override
