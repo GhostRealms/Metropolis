@@ -1,6 +1,7 @@
 package net.ghostrealms;
 
 import net.ghostrealms.util.LocationStore;
+import net.ghostrealms.util.SerializeStatus;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -12,17 +13,17 @@ import java.util.List;
 /**
  * Created by jamesraynor on 7/28/15.
  */
-public class Selection {
+public class BlockSelection {
     public static final int MAX_DISTANCE = 200;
     public static final int SUCCESSFUL = 0;
     public static final int TO_LARGE = 1;
     public static final int NOT_SET = 2;
     public static final int DIFFERENT_WORLDS = 3;
-    private static final HashMap<Player, Selection> selections = new HashMap<Player, Selection>();
+    private static final HashMap<Player, BlockSelection> selections = new HashMap<Player, BlockSelection>();
     private LocationStore locations;
     private List<Block> storedLocation;
 
-    private Selection() {
+    private BlockSelection() {
     }
 
     /**
@@ -31,9 +32,9 @@ public class Selection {
      * @param player
      * @return the selection of the player
      */
-    public static Selection getSelection(Player player) {
+    public static BlockSelection getSelection(Player player) {
         if (!selections.containsKey(player)) {
-            return new Selection().putInList(player);
+            return new BlockSelection().putInList(player);
         }
         return selections.get(player);
     }
@@ -44,7 +45,7 @@ public class Selection {
      * @param player
      * @return the selection
      */
-    private Selection putInList(Player player) {
+    private BlockSelection putInList(Player player) {
         if (storedLocation == null) storedLocation = new ArrayList<Block>();
         selections.put(player, this);
         this.locations = new LocationStore();
@@ -85,13 +86,12 @@ public class Selection {
 
     /**
      * populates the list of locations.
-     *
      * @return status code
      */
-    public int serialize() {
-        if (!locations.areSet()) return NOT_SET;
-        if (!locations.equalWorlds()) return DIFFERENT_WORLDS;
-        if (locations.distance() > MAX_DISTANCE) return TO_LARGE;
+    public SerializeStatus serialize() {
+        if (!locations.areSet()) return SerializeStatus.NOT_SET;
+        if (!locations.equalWorlds()) return SerializeStatus.DIFFERENT_WORLDS;
+        if (locations.distance() > MAX_DISTANCE) return SerializeStatus.TO_LARGE;
 
         int x1 = locations.getLocation().getBlockX();
         int x2 = locations.getLocation2().getBlockX();
@@ -131,6 +131,6 @@ public class Selection {
                 }
             }
         }
-        return SUCCESSFUL;
+        return SerializeStatus.SUCCESSFUL;
     }
 }
