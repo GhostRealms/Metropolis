@@ -4,17 +4,22 @@ import com.thoughtworks.xstream.XStream;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
+import lombok.AccessLevel;
+import lombok.Getter;
 
 
 public class Metro extends JavaPlugin {
   
+    @Getter
     private static XStream xstream = new XStream();
+    @Getter 
     private static RealmsEconomy econ = null;
+    @Getter
     private static Register register = null;
+    @Getter
     private static JavaPlugin plugin = null;
-    
-    private Database db = null;
+    @Getter(AccessLevel.PACKAGE)
+    private static Database db = null;
     
     @Override
     public void onLoad() {
@@ -43,7 +48,7 @@ public class Metro extends JavaPlugin {
                    + ");");
       db.execute("CREATE TABLE IF NOT EXISTS requests (" 
                    + "id VARCHAR(36) NOT NULL PRIMARY KEY," 
-                   + "type INT(2) NOT NULL," 
+                   + "type INT NOT NULL,"
                    + "data TEXT NOT NULL," 
                    + "time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()"
                    + ");");
@@ -60,16 +65,8 @@ public class Metro extends JavaPlugin {
 
     @Override
     public void onDisable() {
-      db.close();
+      db.flush();
       register.saveTowns();
-    }
-    
-    public static RealmsEconomy getEconomy() {
-        return econ;
-    }
-    
-    public static Register getRegister() {
-        return register;
     }
     
     public static JavaPlugin plugin() {
@@ -78,6 +75,10 @@ public class Metro extends JavaPlugin {
 
     public static XStream xstream() {
       return xstream;
+    }
+  
+    public static Database database() {
+      return db;
     }
 
 }
