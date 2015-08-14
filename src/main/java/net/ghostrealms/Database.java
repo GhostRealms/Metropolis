@@ -66,7 +66,16 @@ public class Database {
   }
 
   private void setupConnection() {
-
+    
+    try {
+      boolean closed = connection.isClosed();
+      if(!closed) {
+        return;
+      }
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
+    
     switch(mode) {
       default:
       case H2:
@@ -196,6 +205,18 @@ public class Database {
 
   public int update(String sql) {
     return executeUpdate(sql);
+  }
+  
+  private void checkOpen() {
+    try {
+      if(connection.isClosed()) {
+        setupConnection();
+      } else {
+        return;
+      }
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
   }
 
 }
