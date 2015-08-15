@@ -2,7 +2,6 @@ package net.ghostrealms.plot;
 
 import net.ghostrealms.Metro;
 import net.ghostrealms.Register;
-import net.sf.ehcache.Element;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
